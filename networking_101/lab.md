@@ -303,13 +303,21 @@ You boot up your desktop complete with its own **<0>** that you plug your ethern
 ***Choose from the following***
 
 **DNS query**
+
 **Private**
+
 **Network Interface Card (NIC)**
+
 **Routing Table**
+
 **Switch**
+
 **Network Interface**
+
 **Network Address Translation (NAT)**
+
 **Dynamic Host Configuration Protocol (DHCP)**
+
 **ARP Table**
 
 Please order the headers of each layer properly for a packet traveling on the physical layer
@@ -318,8 +326,11 @@ Please order the headers of each layer properly for a packet traveling on the ph
 ***Choose from the following***
 
 **HTTP**
+
 **Ethernet**
+
 **IP**
+
 **TCP**
 
 ## Quiz Me Up
