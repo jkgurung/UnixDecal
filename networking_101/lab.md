@@ -299,7 +299,7 @@ Let's take a look at all these concepts applied to something we are very familia
 
 Try filling the blanks with the proper terms.
 
-You boot up your desktop complete with its own **<0>** that you plug your ethernet cord into. That physical connection shows up as a **<1>** when you run `ip a`. The other end of the ethernet cable is connected to a modem/router which functions as a **<2>**, forwarding packets to appropriate  devices on your home network. Your computer uses **<3>** to get an IP address. Let's assume this address is 192.168.42.1 making this a **<4>** address, we will need **<5>** to modify addresses while communicating with servers outside the local network. I open a browser and type https://www.reddit.com/r/CatsStandingUp/. The machine issues a **<6>** to convert that name into an IP address. The machine wraps the packet in the appropriate headers and then needs to send the packet to your modem/router. It looks in the **<7>** and decides that the packet should be sent to the IP address of your default gateway which is your modem/router in this case. We now lookup the gateway's IP address in the **<8>** to get its corresponding MAC address. We encapsulate the packet and send it off to the router which will forward the request to the webserver and redirect any response packets back to your local machine.
+You boot up your desktop complete with its own **<NIC>** that you plug your ethernet cord into. That physical connection shows up as a **<Network Interface>** when you run `ip a`. The other end of the ethernet cable is connected to a modem/router which functions as a **<Switch>**, forwarding packets to appropriate  devices on your home network. Your computer uses **<DHCP>** to get an IP address. Let's assume this address is 192.168.42.1 making this a **<Private>** address, we will need **<NAT>** to modify addresses while communicating with servers outside the local network. I open a browser and type https://www.reddit.com/r/CatsStandingUp/. The machine issues a **<DNS query>** to convert that name into an IP address. The machine wraps the packet in the appropriate headers and then needs to send the packet to your modem/router. It looks in the **<Routing Table>** and decides that the packet should be sent to the IP address of your default gateway which is your modem/router in this case. We now lookup the gateway's IP address in the **<ARP Table>** to get its corresponding MAC address. We encapsulate the packet and send it off to the router which will forward the request to the webserver and redirect any response packets back to your local machine.
 
 ***Choose from the following***
 
@@ -322,7 +322,7 @@ You boot up your desktop complete with its own **<0>** that you plug your ethern
 **ARP Table**
 
 Please order the headers of each layer properly for a packet traveling on the physical layer
-**<0>** || **<1>** || **<2>** || **<3>** || Data
+**<Ethernet>** || **<IP>** || **<TCP>** || **<HTTP>** || Data
 
 ***Choose from the following***
 
@@ -340,15 +340,42 @@ Please run `git clone https://github.com/c2tonyc2/sysadmin-decal.git` before sta
 **Some of these commands may require sudo, so please try this on your class machines. Note: if any of these commands fail, they may not be on your machine's path.  This might be due to your path not including `/usr/sbin` to fix this issue simply run `export PATH=$PATH:/usr/sbin`.  That command adds the `usr/sbin` file to your systems PATH so your machine knows to look there for commands like `arp`.**
 
 1. Does HTTP use TCP or UDP and why? How about Discord and Skype, why?
+    - HTTP because TCP ensures reliable transport. 
+    - UDP because efficiency is important. Also it doesn't make sense to resent packet on Skype after some time.
 2. What is the MAC and IP address of one if your machine's interfaces, not including the loopback interface.
+    - ran `ip a` or `ip addr` displays following.
+    - 52:54:00:d7:ce:cc and 169.229.226.255
 3. Is the IP address from the above question a public or private one? Based on whether it's public or private, could someone in San Francisco ping its IP address over the internet?
+    - It's private IP address. 
+    - Yeah with NAT
 4. What does your machine's routing table look like?
+    - `netstat -r` displays the kernel IP routing table.
 5. What does your machine's arp table look like? Can you print out the arp table so that it displays IP addresses?
+    - `arp` will display arp table.
 6. Launch `ninja_port.py`, by running `python3 ninja_port.py` and then locate the port where the ninja is hiding and send it a `found you` message.  What does it say back, how did you find out what port is was hiding on?
+    - `netstat -l -p | grep python` to find port number.
+    - "Aw man how did you know I was hiding on port 36017" by `nc localhost 36017`
 7. Launch `ninja_port.py` again and this time use `tcpdump` to monitor the loopback interface. What sort of packets arrive? Hint: Take a look at the `-X` flag for tcpdump
+    - `sudo tcpdump -i lo`
+    - 
 8. What IP address does `google.com` resolve to?
+    - 216.58.195.78 is the IP address of `google.com`.
+    - We can use `ping google.com` or `dig google.com`.
 9. What types of records do you get when you do a DNS lookup of `facebook.com`, how about `www.facebook.com`?
+    - Using `dig facebook.com` we will get `A record`. 
+    - Using `dig www.facebook.com` we will get `CNAME record`.
 10. What command would you run to show the interfaces on your machine? Which one is the loopback interface?  Which interface would traffic to the internet go through?
+    - `ip addr` to show the interfaces.
+    - lo is the loopback interface.
+    - eth0 traffic to the internet go through.
 11. How many router hops away is berkeley.edu, stanford.edu, and duke.edu? Is there a difference, and why?
+    - `traceroute berkeley.edu` is 4 hops away.
+    - `traceroute stanford.edu` is 7 hops away.
+    - `traceroute duke.edu` is 16 hops away.
+    - There's difference because those server are geographically far which needs to go though intermediatery routers.
 12. How many distinct hosts can `127.0.0.0/8` contain?
+    - 2^24. In this case 8, is the subnet mask. This represents how many bits are in the network address, the remaining bits identify a host within the network.
 13. What ports do DNS, SSH, and DHCP use?
+    - DNS: 53
+    - SSH: 22
+    - DHCP: 68, 67
