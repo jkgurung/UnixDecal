@@ -1,0 +1,83 @@
+Files and Folders
+=================
+1. How many files are in the code folder?
+>>> 1 file
+2. What happens when you try to use cd on a file (as opposed to a folder)?
+>>> It will show the error saying "Not a directory"
+3. What happens when you type cd by itself, without any arguments?
+>>> It will take to the root.
+4. Go to the lab2 folder and type ls -A. Do you see anything different?
+>>> It will show hidden files too.
+
+
+ Reading Files
+ =============
+ 1. What happens when you run “cat binary_file” from inside the lab2 folder?
+ >>> It will display some binary that unreadable to human.
+ 2. What happens when you run cat on a folder (as opposed to a file)?
+ >>> will show the error saying "Is a directory".
+ 3. Can you find the hidden file? What are its contents?
+ >>> ./.bash_history
+
+ Other File Manipulation
+ ========================
+ 1. Try copying the code folder into a folder called newcode. Does it work? How can you make it work? If you aren’t sure, try doing a Google search to learn how to copy a folder.
+ >>> It complains that "-r not specified" as this is folder copy. I used `cp -r code newcode`
+
+ 2. Make a folder called myfolder and try to delete it with rm. Does it work? Again, try to figure out how to delete it.
+ >>> It won't work coz it complains "Is a directory". To make it work it ran `rm -rf myfolder`
+
+
+Command Flags
+==============
+1. How do you list all files in a directory, with extra information, AND showing hidden files? Write the command.
+>>> `ls -la`
+2. At the start of this lab, you used the tree command to draw a diagram of the filesystem hierarchy. How can you show hidden files with the tree command? If you’re not sure, read man tree.
+>>> `tree -a`
+
+less
+==========
+1. What is the date and time of the first entry in apache-log.txt? The last entry?
+>>> first entry: [05/Mar/2017:06:25:14 -0800]
+    last entry: [06/Mar/2017:00:27:17 -0800]
+2. What is the date and time of the first log entry related to “archlinux”?
+>>> [05/Mar/2017:06:25:19 -0800]
+
+Grep
+======
+1. The documents/people file contains a list of (fake) people’s names, gender, and addresses. Use grep to find out which people live on “Agawam Street.”
+>>> 
+Ken Fularczyk	M	68	Agawam Street, line 429
+Moon Caille	M	43	Agawam Street, line 4
+
+WC
+===
+1. Usually you only care about line counts, and the other two numbers just make things confusing. Read the manpage for wc. How can you only get the line count, without any other numbers? Write the command to get just line counts for all the Ubuntu logs.
+>>> `wc -l`
+
+Wget
+=====
+1. What is the difference between curl and wget? When might you use one over the other?
+>>> Curl is to display a file from the internet. Wget is to download a file from the Internet. If we want to just quickly check some contents then use Curl and if we want to download file from the internet then we use wget.
+
+2. Run curl google.com. Then run wget google.com and read the downloaded file. Are there any extra differences you see?
+>>> When we do curl, it will display all the contents of google.com on the screen.
+ And when we do wget, it will display response header and tells that contents is saved in index.html
+
+Pipes and Redirection
+======================
+1. What command would you run to get the number of times someone said thanks on IRC, but on all days in August?
+>>> `grep -i thanks logs/irc-ubuntu/*.txt | wc -l`
+
+2. The documents/vehicles file contains a list of cars and their owners. How many vehicles listed are of make “Toyota”? What command(s) did you use to figure this out?
+>>> `grep -i “Toyota” documents/vehicles | wc -l`
+
+3. How many log entries related to Ubuntu are in the apache logfile? What about Kali linux?
+>>> Ubuntu: 22934346
+ Kali linux: 111701541
+4. Scenario: you remember being in the Ubuntu chatroom when a user named “tomreyn” posted a useful link to a Github issue (you remember that the issue number was 16, but you don’t remember the repository name). Can you find what you’re looking for in the logs?
+>>>
+`grep -i tomreyn logs/irc-ubuntu/*.txt | grep -i github | grep -i 16`
+
+Link: https://github.com/groeck/lm-sensors/issues/16
+
