@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# ./phonebook new name number adds an entry to the phonebook.
+# ./phonebook name displays the name and phone number associated with that name.
+# ./phonebook list displays every entry in the phonebook (in no particular order). If the phonebook has no entries, display phonebook is empty
+# ./phonebook remove name deletes the entry associated with that name.
+# ./phonebook clear deletes the entire phonebook.
+
+#contents of phonebook
+PhoneBook="./phonebook.txt" 
+Backup="./phonebook-backup.txt"
+
+main() {
+  if [ "$1" = list ]; then
+    if [ ! -s $PhoneBook ]; then
+      echo "phonebook is empty"
+    else
+      cat $PhoneBook
+    fi
+  elif [ "$1" = new ]; then
+    entry="$2 $3 $4"
+    echo "$entry" >> $PhoneBook
+  elif [ "$1" = remove ]; then
+    entry="$2 $3"
+    grep -v "$entry" $PhoneBook > $Backup
+    cat $Backup > $PhoneBook
+  elif [ "$1" = clear ]; then
+    echo -n > $PhoneBook
+  else
+    entry="$2 $3"
+    cat $PhoneBook | grep "$entry"
+  fi
+}
+
+main "$1" "$2" "$3" "$4"
