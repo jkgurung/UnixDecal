@@ -322,7 +322,7 @@ You boot up your desktop complete with its own **NIC** that you plug your ethern
 **ARP Table**
 
 Please order the headers of each layer properly for a packet traveling on the physical layer
-**<Ethernet>** || **<IP>** || **<TCP>** || **<HTTP>** || Data
+**Ethernet** || **IP** || **TCP** || **HTTP** || Data
 
 ***Choose from the following***
 
