@@ -347,11 +347,12 @@ Please run `git clone https://github.com/c2tonyc2/sysadmin-decal.git` before sta
     - 52:54:00:d7:ce:cc and 169.229.226.255
 3. Is the IP address from the above question a public or private one? Based on whether it's public or private, could someone in San Francisco ping its IP address over the internet?
     - It's private IP address. 
-    - Yeah with NAT
+   
 4. What does your machine's routing table look like?
     - `netstat -r` displays the kernel IP routing table.
+    - `ip route`
 5. What does your machine's arp table look like? Can you print out the arp table so that it displays IP addresses?
-    - `arp` will display arp table.
+    - `arp -n` will display numerical arp table.
 6. Launch `ninja_port.py`, by running `python3 ninja_port.py` and then locate the port where the ninja is hiding and send it a `found you` message.  What does it say back, how did you find out what port is was hiding on?
     - `netstat -l -p | grep python` to find port number.
     - "Aw man how did you know I was hiding on port 36017" by `nc localhost 36017`
