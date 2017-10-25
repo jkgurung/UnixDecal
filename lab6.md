@@ -57,9 +57,10 @@ So now let’s try something else. (You can quit yes now). In htop, press F5 to 
 You’re now looking at the process hierarchy. On Unix, every process has a parent process, which is initially the process that created it.
 
 Open up a new terminal and SSH into your VM. Then launch sleep 1000 & in the background. Then, in htop, find the sleep process. What is its parent?
+  - bash
 
 Select this parent and press F9 to kill it. A menu titled “Send signal” should open up on the left, with a list of signals you can send. Send it the signal SIGTERM. What happens?
-
+  - Sleep process moved to root where it's parent was before with pid 1.
 If you look, the process you killed should no longer be in the process list. The sleep process should still be around (because you launched it in the background), and its parent should be PID 1. As you can see, when a process is orphaned, it is adopted by the init process.
 
 Let’s now go over some of those other signals:
