@@ -35,9 +35,17 @@ Let’s take a look at the first column of ps’s output in detail. That column 
 By default, ps only displays the processes running in your current terminal session. Try running ps -e to see all processes.
 
 You can also run ps -f to see the full command line. Try running ps -f and ps -ef in your terminal. What do they do?
+- __`ps -f` returns full command line where as `ps -ef` command output both full command line on all the processes.__
 
 You can also run ps -u yourusername to see the processes currently running as your user. What do you see?
-
+``` 
+  PID TTY          TIME CMD
+ 4470 ?        00:00:00 systemd
+ 4471 ?        00:00:00 (sd-pam)
+ 4477 ?        00:00:00 sshd
+ 4478 pts/0    00:00:00 bash
+ 4777 pts/0    00:00:00 ps
+```
 
 ### htop
 
@@ -47,6 +55,7 @@ Open up a terminal and run the htop command. You should see something like this:
 First hit F2, scroll down to Display options, and check Hide userland process threads. We won’t be dealing with those in this lab.
 
 Now press F10 to return to the main screen. Scroll down the list. Each entry in the list is a process. Are there any processes in the list you recognize? Can you find bash in the list?
+-  I can recognize `htop` and `bash` processes.
 
 Now, open up another terminal window and SSH into your VM. Then run the yes command. The yes command prints a continuous stream of y’s. Now look at htop again. The yes command should be using 100% or more CPU, because it’s running all the time. If you also look at the CPU bars at the top, you can see how at least one CPU is maxed out.
 
@@ -60,7 +69,8 @@ Open up a new terminal and SSH into your VM. Then launch sleep 1000 & in the bac
   - bash
 
 Select this parent and press F9 to kill it. A menu titled “Send signal” should open up on the left, with a list of signals you can send. Send it the signal SIGTERM. What happens?
-  - Sleep process moved to root where it's parent was before with pid 1.
+  - Sleep process moved to root where it's parent was before. Also it closes the window too.
+  
 If you look, the process you killed should no longer be in the process list. The sleep process should still be around (because you launched it in the background), and its parent should be PID 1. As you can see, when a process is orphaned, it is adopted by the init process.
 
 Let’s now go over some of those other signals:
@@ -97,6 +107,7 @@ Now, cron will run the date command as the root user at the beginning of every m
 Run systemctl. You’ll see a long table of every unit known to systemd.
 
 Let’s narrow it down to services for now. Run systemctl --type=service. Now you can see a list of all services running on your computer. Each of these services is a daemon running in the background. Can you see cron in the list?
+-  ```cron.service                       loaded active running Regular background program processing daemon```
 
 ### Controlling services
 
